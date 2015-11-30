@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -41,12 +42,24 @@ public class Main {
         return hands;
     }
 
+    static boolean isFlush(HashSet<Card> hand){
+        HashSet<Card.Suit> suits = hand.stream()
+                .map(card -> {
+                    return card.suit;
+                })
+                .collect(Collectors.toCollection(HashSet::new));
+        return suits.size() == 1;
+    }
+
     public static void main(String[] args) {
         Card aceOfSpades = new Card(Card.Suit.SPADES, Card.Rank.ACE);
         HashSet<Card> deck = createDeck();
         //System.out.println(deck.size());
         //System.out.println(deck.contains(aceOfSpades));
         HashSet<HashSet<Card>> hands = createHands(deck);
+        hands = hands.stream()
+                .filter(Main:: isFlush)
+                .collect(Collectors.toCollection(HashSet:: new));
         System.out.println(hands.size());
     }
 
