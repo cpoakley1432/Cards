@@ -52,6 +52,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        long beginTime = System.currentTimeMillis();
+
         Card aceOfSpades = new Card(Card.Suit.SPADES, Card.Rank.ACE);
         HashSet<Card> deck = createDeck();
         //System.out.println(deck.size());
@@ -61,6 +63,9 @@ public class Main {
                 .filter(Main:: isFlush)
                 .collect(Collectors.toCollection(HashSet:: new));
         System.out.println(hands.size());
+
+        long endTime = System.currentTimeMillis();
+        System.out.println(String.format("Elapsed time: %d msecs", endTime - beginTime));
     }
 
 }
